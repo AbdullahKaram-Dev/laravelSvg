@@ -2,7 +2,9 @@
 ![](https://img.shields.io/github/stars/AbdullahKaram-Dev/laravelSvg)
 ![](https://img.shields.io/github/forks/AbdullahKaram-Dev/laravelSvg)
 ![](https://img.shields.io/github/license/AbdullahKaram-Dev/laravelSvg)
-![](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2FAbdullahKaram-Dev%2FlaravelSvg)
+[![Total Downloads](https://img.shields.io/packagist/dt/abdullah-karam/laravel-svg.svg?style=flat-square)](https://packagist.org/packages/abdullah-karam/laravel-svg)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/abdullah-karam/laravel-svg.svg?style=flat-square)](https://packagist.org/packages/abdullah-karam/laravel-svg)
+
 
 # Laravel SVG
 
