@@ -1,5 +1,5 @@
 {
-    "name": "abdullah/laravel-svg",
+    "name": "abdullah-karam/laravel-svg",
     "description": "this package is about generating svg according to any string containing two words with some pretty options",
     "type": "library",
     "license": "MIT",
