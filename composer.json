@@ -1,0 +1,29 @@
+{
+    "name": "abdullah/laravel-svg",
+    "description": "this package is about generating svg according to any string containing two words with some pretty options",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Abdullah\\LaravelSvg\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "abdullah karam mohamed karam",
+            "email": "abdallakaramdev@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Abdullah\\LaravelSvg\\LaravelSvgServiceProvider"
+            ],
+            "aliases": {
+                "LaravelSvg": "Abdullah\\LaravelSvg\\Facades\\LaravelSvg"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {}
+}
