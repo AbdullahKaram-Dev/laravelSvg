@@ -2,6 +2,7 @@
 ![](https://img.shields.io/github/stars/AbdullahKaram-Dev/laravelSvg)
 ![](https://img.shields.io/github/forks/AbdullahKaram-Dev/laravelSvg)
 ![](https://img.shields.io/github/license/AbdullahKaram-Dev/laravelSvg)
+![](https://img.shields.io/twitter/url?url=https%3A%2F%2Fgithub.com%2FAbdullahKaram-Dev%2FlaravelSvg)
 
 # Laravel SVG
 
