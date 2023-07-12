@@ -1,3 +1,8 @@
+![](https://img.shields.io/github/issues/AbdullahKaram-Dev/laravelSvg)
+![](https://img.shields.io/github/stars/AbdullahKaram-Dev/laravelSvg)
+![](https://img.shields.io/github/forks/AbdullahKaram-Dev/laravelSvg)
+![](https://img.shields.io/github/license/AbdullahKaram-Dev/laravelSvg)
+
 # Laravel SVG
 
 A Laravel package for generating SVG images from user full names or initials with some pretty cool customization
