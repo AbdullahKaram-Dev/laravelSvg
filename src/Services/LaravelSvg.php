@@ -41,7 +41,7 @@ class LaravelSvg
 
     public function svgFor(string $userFullName): self
     {
-        if (Str::wordCount($userFullName) < 2 || Str::wordCount($userFullName) > 2) {
+        if (Str::wordCount($userFullName) < 2) {
             throw new \InvalidArgumentException('User full name must be at least 2 words');
         }
         $this->firstName = Str::before($userFullName, ' ');
@@ -141,8 +141,8 @@ class LaravelSvg
             [
                 $this->getSetting('avatar_text_color'),
                 $this->getSetting('avatar_background_color'),
-                $this->firstName[0],
-                $this->lastName[0],
+                Str::upper($this->firstName[0]),
+                Str::upper($this->lastName[0]),
                 ($this->withLogoText ? $this->logoText : ''),
                 ($this->withLogoText ? $this->getSetting('logo_text_color') : ''),
             ],
