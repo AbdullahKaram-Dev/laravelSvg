@@ -20,7 +20,7 @@ options.
 You can install the package via Composer by running the following command:
 
 ```
-composer require your-vendor/laravel-svg
+composer require abdullah-karam/laravel-svg
 ```
 
 ## Usage
