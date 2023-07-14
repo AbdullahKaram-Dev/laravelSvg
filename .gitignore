@@ -7,3 +7,4 @@
 .phpunit.result.cache
 composer.phar
 composer.lock
+tags.md
