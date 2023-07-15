@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Facade;
  */
 class LaravelSvg extends Facade
 {
+    protected static $cached = false;
+
     protected static function getFacadeAccessor(): string
     {
         return 'laravel-svg';

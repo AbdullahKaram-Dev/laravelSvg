@@ -11,21 +11,13 @@ use Illuminate\Support\Str;
 class LaravelSvg
 {
 
-    protected readonly array $settings;
-
-    protected readonly string $firstName;
-
-    protected readonly string $lastName;
-
-    protected bool $withLogoText = false;
-
-    protected string $svgTemplate = '';
-
-
-    protected readonly string $logoText;
-
-
-    public function __construct()
+    public function __construct(
+        protected array  $settings = [],
+        protected string $firstName = '',
+        protected string $lastName = '',
+        protected bool   $withLogoText = false,
+        protected string $svgTemplate = '',
+    )
     {
         $this->settings = config('laravel-svg');
     }
@@ -44,9 +36,9 @@ class LaravelSvg
         if (Str::wordCount($userFullName) < 2) {
             throw new \InvalidArgumentException('User full name must be at least 2 words');
         }
-        $this->firstName = Str::before($userFullName, ' ');
+        $this->firstName = strtoupper(Str::before($userFullName, ' '));
 
-        $this->lastName = Str::after($userFullName, ' ');
+        $this->lastName = strtoupper(Str::after($userFullName, ' '));
 
         return $this;
     }
@@ -85,7 +77,7 @@ class LaravelSvg
         Storage::disk($disk)->put($svgPath . '/' . $svgName, $svg);
         return [
             'name' => $svgName,
-            'path' => $svgPath.'/'.$svgName,
+            'path' => $svgPath . '/' . $svgName,
             'full_path' => Storage::disk($disk)->url($svgPath . '/' . $svgName),
             'mime_type' => 'image/svg+xml',
             'size' => Storage::disk($disk)->size($svgPath . '/' . $svgName),
@@ -141,8 +133,8 @@ class LaravelSvg
             [
                 $this->getSetting('avatar_text_color'),
                 $this->getSetting('avatar_background_color'),
-                Str::upper($this->firstName[0]),
-                Str::upper($this->lastName[0]),
+                $this->firstName[0],
+                $this->lastName[0],
                 ($this->withLogoText ? $this->logoText : ''),
                 ($this->withLogoText ? $this->getSetting('logo_text_color') : ''),
             ],
