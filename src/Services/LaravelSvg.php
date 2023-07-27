@@ -10,6 +10,9 @@ use Illuminate\Support\Str;
  */
 class LaravelSvg
 {
+    private const MINIMUM_WORDS_COUNT = 2;
+
+    private const DEFAULT_SVG_TYPE = 'image/svg+xml';
 
     public function __construct(
         protected array  $settings = [],
@@ -17,6 +20,7 @@ class LaravelSvg
         protected string $lastName = '',
         protected bool   $withLogoText = false,
         protected string $svgTemplate = '',
+        protected int    $wordsCount = 0
     )
     {
         $this->settings = config('laravel-svg');
@@ -33,14 +37,35 @@ class LaravelSvg
 
     public function svgFor(string $userFullName): self
     {
-        if (Str::wordCount($userFullName) < 2) {
+        $this->setCountWords($userFullName);
+        dd($this->wordsCount);
+        if ($this->wordsCount < self::MENIMUM_WORDS_COUNT) {
             throw new \InvalidArgumentException('User full name must be at least 2 words');
         }
-        $this->firstName = strtoupper(Str::before($userFullName, ' '));
 
+        $this->firstName = strtoupper(Str::before($userFullName, ' '));
         $this->lastName = strtoupper(Str::after($userFullName, ' '));
 
         return $this;
+    }
+
+
+    private function setCountWords(string $userFullName): void
+    {
+        if ($this->isArabicWords($userFullName)) {
+            $words = explode(' ', $userFullName);
+            foreach ($words as $word) {
+                $this->wordsCount++;
+            }
+        } else {
+            $this->wordsCount = Str::wordCount($userFullName);
+        }
+    }
+
+    private function isArabicWords(string $userFullName): bool
+    {
+        $arabic = preg_match('/\p{Arabic}/u', $userFullName);
+        return $arabic;
     }
 
     public function logoText(string $logoText = null): self
@@ -64,24 +89,19 @@ class LaravelSvg
     protected function saveSvg(): array
     {
         $this->checkDisk();
-
         if ($this->getSetting('hash_svg_name')) {
             $svgName = uniqid() . '.svg';
         } else {
             $svgName = $this->firstName . '-' . $this->lastName . '.svg';
         }
-
-        $svgPath = $this->getSetting('default_svg_path');
-        $svg = $this->svgTemplate;
-        $disk = $this->getSetting('disk');
-        Storage::disk($disk)->put($svgPath . '/' . $svgName, $svg);
+        Storage::disk($disk)->put($svgPath . '/' . $svgName, $this->svgTemplate);
         return [
             'name' => $svgName,
-            'path' => $svgPath . '/' . $svgName,
+            'path' => $this->getSetting('default_svg_path') . '/' . $svgName,
             'full_path' => Storage::disk($disk)->url($svgPath . '/' . $svgName),
-            'mime_type' => 'image/svg+xml',
+            'mime_type' => self::DEFAULT_SVG_TYPE,
             'size' => Storage::disk($disk)->size($svgPath . '/' . $svgName),
-            'disk' => $disk
+            'disk' => $this->getSetting('disk')
         ];
     }
 
