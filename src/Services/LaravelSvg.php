@@ -130,7 +130,7 @@ class LaravelSvg
 
     protected function buildSvgText(): void
     {
-        $this->svgTemplate .= '<text x="50%" y="50%" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar}{secondChar}</text>';
+        $this->svgTemplate .= '<text x="50%" y="50%" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar} {secondChar}</text>';
     }
 
     protected function buildBackground(): void
@@ -151,8 +151,8 @@ class LaravelSvg
             [
                 $this->getSetting('avatar_text_color'),
                 $this->getSetting('avatar_background_color'),
-                $this->firstWord[0],
-                $this->lastWord[0],
+                Str::substr($this->firstWord, 0, 1),
+                Str::substr($this->lastWord, 0, 1),
                 ($this->withLogoText ? $this->logoText : ''),
                 ($this->withLogoText ? $this->getSetting('logo_text_color') : ''),
             ],
