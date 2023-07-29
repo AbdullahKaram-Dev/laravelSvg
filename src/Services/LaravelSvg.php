@@ -130,7 +130,7 @@ class LaravelSvg
 
     protected function buildSvgText(): void
     {
-        $this->svgTemplate .= '<text x="50%" y="50%" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar} {secondChar}</text>';
+        $this->svgTemplate .= '<text x="50%" y="50%" word-spacing="-2.5" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar} {secondChar}</text>';
     }
 
     protected function buildBackground(): void
