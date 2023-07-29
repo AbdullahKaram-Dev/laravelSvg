@@ -38,7 +38,7 @@ class LaravelSvg
     public function svgFor(string $words): self
     {
         $this->setCountWords($words);
-        if ($this->wordsCount < self::MENIMUM_WORDS_COUNT) {
+        if ($this->wordsCount < self::MINIMUM_WORDS_COUNT) {
             throw new \InvalidArgumentException('Invalid words count passed to svgFor method');
         }
 
