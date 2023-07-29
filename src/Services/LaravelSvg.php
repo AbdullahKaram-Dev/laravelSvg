@@ -20,7 +20,7 @@ class LaravelSvg
         protected string $lastName = '',
         protected bool   $withLogoText = false,
         protected string $svgTemplate = '',
-        protected int    $wordsCount = 0
+        protected int $wordsCount = 0
     )
     {
         $this->settings = config('laravel-svg');
