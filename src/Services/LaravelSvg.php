@@ -49,21 +49,21 @@ class LaravelSvg
     }
 
 
-    private function setCountWords(string $userFullName): void
+    private function setCountWords(string $words): void
     {
-        if ($this->isArabicWords($userFullName)) {
-            $words = explode(' ', $userFullName);
-            foreach ($words as $word) {
+        if ($this->isArabicWords($words)) {
+            $ArabicWords = explode(' ', $words);
+            foreach ($ArabicWords as $word) {
                 $this->wordsCount++;
             }
         } else {
-            $this->wordsCount = Str::wordCount($userFullName);
+            $this->wordsCount = Str::wordCount($words);
         }
     }
 
-    private function isArabicWords(string $userFullName): bool
+    private function isArabicWords(string $words): bool
     {
-        $arabic = preg_match('/\p{Arabic}/u', $userFullName);
+        $arabic = preg_match('/\p{Arabic}/u', $words);
         return $arabic;
     }
 
@@ -93,22 +93,21 @@ class LaravelSvg
         } else {
             $svgName = $this->firstWord . '-' . $this->lastWord . '.svg';
         }
-        Storage::disk($disk)->put($svgPath . '/' . $svgName, $this->svgTemplate);
+        Storage::disk($this->getSetting('disk'))->put($svgPath . '/' . $svgName, $this->svgTemplate);
         return [
             'name' => $svgName,
             'path' => $this->getSetting('default_svg_path') . '/' . $svgName,
-            'full_path' => Storage::disk($disk)->url($svgPath . '/' . $svgName),
+            'full_path' => Storage::disk($this->getSetting('disk'))->url($svgPath . '/' . $svgName),
             'mime_type' => self::DEFAULT_SVG_TYPE,
-            'size' => Storage::disk($disk)->size($svgPath . '/' . $svgName),
+            'size' => Storage::disk($this->getSetting('disk'))->size($svgPath . '/' . $svgName),
             'disk' => $this->getSetting('disk')
         ];
     }
 
     protected function checkDisk(): void
     {
-        $disk = $this->getSetting('disk');
-        if (!Storage::disk($disk)->exists($this->getSetting('default_svg_path'))) {
-            Storage::disk($disk)->makeDirectory($this->getSetting('default_svg_path'));
+        if (!Storage::disk($this->getSetting('disk'))->exists($this->getSetting('default_svg_path'))) {
+            Storage::disk($this->getSetting('disk'))->makeDirectory($this->getSetting('default_svg_path'));
         }
     }
 
