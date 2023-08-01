@@ -2,7 +2,7 @@
 
 namespace Abdullah\LaravelSvg\Services;
 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 /**
@@ -93,21 +93,23 @@ class LaravelSvg
         } else {
             $svgName = $this->firstWord . '-' . $this->lastWord . '.svg';
         }
-        Storage::disk($this->getSetting('disk'))->put($this->getSetting('default_svg_path') . '/' . $svgName, $this->svgTemplate);
+        Storage::put(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName, $this->svgTemplate);
         return [
             'name' => $svgName,
             'path' => $this->getSetting('default_svg_path') . '/' . $svgName,
-            'full_path' => Storage::disk($this->getSetting('disk'))->url($this->getSetting('default_svg_path') . '/' . $svgName),
+            'full_path' => $this->getSetting('folder').'/'.$this->getSetting('default_svg_path') . '/' . $svgName,
             'mime_type' => self::DEFAULT_SVG_TYPE,
-            'size' => Storage::disk($this->getSetting('disk'))->size($this->getSetting('default_svg_path') . '/' . $svgName),
+            'size' => File::size(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName),
             'disk' => $this->getSetting('disk')
         ];
     }
 
+    //Storage::disk($this->getSetting('disk'))->url($this->getSetting('default_svg_path') . '/' . $svgName),
+
     protected function checkDisk(): void
     {
-        if (!Storage::disk($this->getSetting('disk'))->exists($this->getSetting('default_svg_path'))) {
-            Storage::disk($this->getSetting('disk'))->makeDirectory($this->getSetting('default_svg_path'));
+        if (!File::exists(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')))) {
+            File::makeDirectory(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')));
         }
     }
 
@@ -130,7 +132,7 @@ class LaravelSvg
 
     protected function buildSvgText(): void
     {
-        $this->svgTemplate .= '<text x="50%" y="50%" word-spacing="-2.5" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar} {secondChar}</text>';
+        $this->svgTemplate .= '<text x="50%" y="50%" word-spacing="-20" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar} {secondChar}</text>';
     }
 
     protected function buildBackground(): void
