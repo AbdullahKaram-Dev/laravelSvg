@@ -93,18 +93,17 @@ class LaravelSvg
         } else {
             $svgName = $this->firstWord . '-' . $this->lastWord . '.svg';
         }
-        Storage::put(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName, $this->svgTemplate);
+        File::put(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName, $this->svgTemplate);
         return [
             'name' => $svgName,
             'path' => $this->getSetting('default_svg_path') . '/' . $svgName,
-            'full_path' => $this->getSetting('folder').'/'.$this->getSetting('default_svg_path') . '/' . $svgName,
+            'full_path' => asset($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName,
             'mime_type' => self::DEFAULT_SVG_TYPE,
             'size' => File::size(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName),
-            'disk' => $this->getSetting('disk')
+            'disk' => 'public'
         ];
     }
 
-    //Storage::disk($this->getSetting('disk'))->url($this->getSetting('default_svg_path') . '/' . $svgName),
 
     protected function checkDisk(): void
     {
