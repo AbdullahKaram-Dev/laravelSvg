@@ -57,8 +57,8 @@ This will generate an SVG image with the user's initials in the center.
 ```php
 array:6 [▼
   "name" => "64af002c8ba51.svg"
-  "path" => "avatars/64af002c8ba51.svg"
-  "full_path" => "http://localhost:8000/storage/avatars/64af002c8ba51.svg"
+  "path" => "users/64af002c8ba51.svg"
+  "full_path" => "http://localhost:8000/storage/users/64af002c8ba51.svg"
   "mime_type" => "image/svg+xml"
   "size" => 422
   "disk" => "public"
@@ -100,8 +100,8 @@ like this `logoText('logo')` or define it once in `config/laravel-svg.php` file.
 ```php
 array:6 [▼ 
   "name" => "64af03da5f35c.svg"
-  "path" => "avatars/64af03da5f35c.svg"
-  "full_path" => "http://localhost:8000/storage/avatars/64af03da5f35c.svg"
+  "path" => "users/64af03da5f35c.svg"
+  "full_path" => "http://localhost:8000/storage/users/64af03da5f35c.svg"
   "mime_type" => "image/svg+xml"
   "size" => 414
   "disk" => "public"
