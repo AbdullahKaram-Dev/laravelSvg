@@ -14,6 +14,14 @@ class LaravelSvg
 
     private const DEFAULT_SVG_TYPE = 'image/svg+xml';
 
+    /**
+     * @param array $settings
+     * @param string $firstWord
+     * @param string $lastWord
+     * @param bool $withLogoText
+     * @param string $svgTemplate
+     * @param int $wordsCount
+     */
     public function __construct(
         protected array  $settings = [],
         protected string $firstWord = '',
@@ -26,6 +34,10 @@ class LaravelSvg
         $this->settings = config('laravel-svg');
     }
 
+    /**
+     * @param $key
+     * @return string
+     */
     protected function getSetting($key): string
     {
         if (isset($this->settings[$key]) && !empty($this->settings[$key])) {
@@ -35,9 +47,14 @@ class LaravelSvg
     }
 
 
+    /**
+     * @param string $words
+     * @return $this
+     */
     public function svgFor(string $words): self
     {
         $this->setCountWords($words);
+
         if ($this->wordsCount < self::MINIMUM_WORDS_COUNT) {
             throw new \InvalidArgumentException('Invalid words count passed to svgFor method');
         }
@@ -49,6 +66,10 @@ class LaravelSvg
     }
 
 
+    /**
+     * @param string $words
+     * @return void
+     */
     private function setCountWords(string $words): void
     {
         if ($this->isArabicWords($words)) {
@@ -61,12 +82,20 @@ class LaravelSvg
         }
     }
 
+    /**
+     * @param string $words
+     * @return bool
+     */
     private function isArabicWords(string $words): bool
     {
         $arabic = preg_match('/\p{Arabic}/u', $words);
         return $arabic;
     }
 
+    /**
+     * @param string|null $logoText
+     * @return $this
+     */
     public function logoText(string $logoText = null): self
     {
         $this->withLogoText = true;
@@ -79,12 +108,18 @@ class LaravelSvg
     }
 
 
+    /**
+     * @return array
+     */
     public function generate(): array
     {
         $this->buildSvg();
         return $this->saveSvg();
     }
 
+    /**
+     * @return array
+     */
     protected function saveSvg(): array
     {
         $this->checkDisk();
@@ -105,6 +140,9 @@ class LaravelSvg
     }
 
 
+    /**
+     * @return void
+     */
     protected function checkDisk(): void
     {
         if (!File::exists(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')))) {
@@ -112,6 +150,9 @@ class LaravelSvg
         }
     }
 
+    /**
+     * @return void
+     */
     protected function buildSvg(): void
     {
         $this->svgTemplate .= '<svg width="100%" height="100%" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">';
@@ -122,6 +163,9 @@ class LaravelSvg
         $this->replaceSvgTemplate();
     }
 
+    /**
+     * @return void
+     */
     protected function buildSvgLogoText(): void
     {
         if ($this->withLogoText) {
@@ -129,16 +173,25 @@ class LaravelSvg
         }
     }
 
+    /**
+     * @return void
+     */
     protected function buildSvgText(): void
     {
         $this->svgTemplate .= '<text x="50%" y="50%" word-spacing="-20" text-anchor="middle" stroke="{avtar_text_color}" stroke-width="1px" dy=".3em" font-size="90">{firstChar} {secondChar}</text>';
     }
 
+    /**
+     * @return void
+     */
     protected function buildBackground(): void
     {
         $this->svgTemplate .= '<rect width="100%" height="100%" rx="50" ry="50" fill="{avatar_background_color}" /><rect x="50" y="50" width="100" height="100" rx="50" ry="50" fill="{avtar_text_color}" />';
     }
 
+    /**
+     * @return void
+     */
     private function replaceSvgTemplate(): void
     {
         $this->svgTemplate = str_replace([
