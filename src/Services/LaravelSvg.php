@@ -28,7 +28,7 @@ class LaravelSvg
         protected string $lastWord = '',
         protected bool   $withLogoText = false,
         protected string $svgTemplate = '',
-        protected int $wordsCount = 0
+        protected int    $wordsCount = 0
     )
     {
         $this->settings = config('laravel-svg');
@@ -38,6 +38,7 @@ class LaravelSvg
      * @param $key
      * @return string
      */
+
     protected function getSetting($key): string
     {
         if (isset($this->settings[$key]) && !empty($this->settings[$key])) {
@@ -128,13 +129,13 @@ class LaravelSvg
         } else {
             $svgName = $this->firstWord . '-' . $this->lastWord . '.svg';
         }
-        File::put(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName, $this->svgTemplate);
+        File::put(public_path($this->getSetting('folder') . '/' . $this->getSetting('default_svg_path')) . '/' . $svgName, $this->svgTemplate);
         return [
             'name' => $svgName,
             'path' => $this->getSetting('default_svg_path') . '/' . $svgName,
-            'full_path' => asset($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName,
+            'full_path' => asset($this->getSetting('folder') . '/' . $this->getSetting('default_svg_path')) . '/' . $svgName,
             'mime_type' => self::DEFAULT_SVG_TYPE,
-            'size' => File::size(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')).'/'.$svgName),
+            'size' => File::size(public_path($this->getSetting('folder') . '/' . $this->getSetting('default_svg_path')) . '/' . $svgName),
             'disk' => 'public'
         ];
     }
@@ -145,8 +146,8 @@ class LaravelSvg
      */
     protected function checkDisk(): void
     {
-        if (!File::exists(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')))) {
-            File::makeDirectory(public_path($this->getSetting('folder').'/'.$this->getSetting('default_svg_path')));
+        if (!File::exists(public_path($this->getSetting('folder') . '/' . $this->getSetting('default_svg_path')))) {
+            File::makeDirectory(public_path($this->getSetting('folder') . '/' . $this->getSetting('default_svg_path')));
         }
     }
 
