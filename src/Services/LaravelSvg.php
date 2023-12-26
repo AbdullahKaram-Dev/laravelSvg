@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
  */
 class LaravelSvg
 {
-    private const MINIMUM_WORDS_COUNT = 2;
+    private const MINIMUM_WORDS_COUNT = 1;
 
     private const DEFAULT_SVG_TYPE = 'image/svg+xml';
 
